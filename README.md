@@ -1,154 +1,170 @@
-# ⚔️ 3-Player Battle Arena
+# LAN 3D Battle Arena
 
-A local multiplayer battle game built with **Python** and **Pygame**, where three players fight against each other in a destructible 2D arena.
+A 3D multiplayer FPS game built with **Python** and the **Ursina Engine**. Play with up to three players over a local network (LAN), choose unique characters, use different weapons, and compete to reach the kill limit first.
 
-Choose your weapons, throw grenades, destroy terrain, collect supply crates, and compete to become the ultimate champion!
+## Features
 
-## 🎮 Features
+* **3-player LAN multiplayer** — Play with up to three computers on the same local network.
+* **First-person combat** — Move, aim, shoot, jump, crouch, sprint, and slide.
+* **Four weapons** — Pistol, AK-47, Shotgun, and Sniper Rifle.
+* **Three unique characters** with different abilities:
 
-* **3-Player Local Multiplayer** — Play with up to three players on the same computer.
-* **Destructible Terrain** — Explosions and sniper shots carve craters into the environment.
-* **Four Weapons** — Pistol, AK-47, Shotgun, and Sniper Rifle.
-* **Physics-Based Gameplay** — Gravity, projectile trajectories, knockback, recoil, and fall damage.
-* **Grenade System** — Charge your throws for different distances and trajectories.
-* **Headshot Damage** — Headshots deal double damage.
-* **Sprint System** — Run faster using a stamina mechanic.
-* **Supply Drops** — Collect ammunition, health, and grenades.
-* **Gamepad Support** — Connect controllers for additional input options.
-* **Score System** — The first player to reach 10 kills wins.
+  * **KANAT (Wing):** Can fly for a limited time.
+  * **ŞİMŞEK (Lightning):** Moves extremely fast and can knock opponents back while sprinting.
+  * **MAYMUN (Monkey):** Has extra health and can throw slippery bananas.
+* **Grenades** — Cook and throw grenades with adjustable throwing power.
+* **Pickups** — Collect items such as health, ammunition, and bombs.
+* **Respawning system** — Return to the battle after being eliminated.
+* **Custom 3D map** — Explore buildings, containers, cover, stairs, and a central platform.
+* **Server-authoritative combat** — The host manages important gameplay events and player state.
 
-## 🛠️ Built With
+## Built With
 
 * Python 3
-* Pygame
-* Object-oriented programming
-* 2D physics and collision detection
+* [Ursina Engine](https://www.ursinaengine.org/)
+* TCP sockets for LAN communication
+* JSON for network messages
 
-## 📋 Requirements
+## Requirements
 
-* Python 3.10 or newer recommended
-* Pygame
-* Windows, Linux, or another platform supported by Pygame
+* Python 3.10 or later is recommended.
+* Ursina Engine
+* Windows or another operating system supported by Python and Ursina
+* Up to three computers connected to the same local network
 
-## 🚀 Installation
+## Installation
 
-**1. Clone the repository**
+### 1. Install Python
 
-```bash
-git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY.git
-```
+Download Python from [python.org](https://www.python.org/downloads/).
 
-**2. Navigate to the project directory**
-
-```bash
-cd YOUR-REPOSITORY
-```
-
-**3. Install the required dependency**
+### 2. Clone the repository
 
 ```bash
-python -m pip install pygame
+git clone https://github.com/YOUR_USERNAME/YOUR_REPOSITORY.git
+cd YOUR_REPOSITORY
 ```
 
-**4. Start the game**
+Replace `YOUR_USERNAME` and `YOUR_REPOSITORY` with your GitHub username and repository name.
+
+Alternatively, download the repository as a ZIP file and extract it.
+
+### 3. Install the dependency
 
 ```bash
-python savas_oyunu.py
+python -m pip install ursina
 ```
 
-## 🕹️ Controls
+### 4. Start the game
 
-### Player 1
+The script in this repository is named `wargame.py`.
 
-| Action        | Key        |
-| ------------- | ---------- |
-| Move          | A / D      |
-| Jump          | W          |
-| Aim Up / Down | Q / E      |
-| Fire          | F          |
-| Throw Grenade | G          |
-| Switch Weapon | R          |
-| Sprint        | Left Shift |
+**Option A — Start as the host**
 
-### Player 2
+```bash
+python wargame.py host Player1
+```
 
-| Action        | Key                |
-| ------------- | ------------------ |
-| Move          | Left / Right Arrow |
-| Jump          | Up Arrow           |
-| Aim Up / Down | , / .              |
-| Fire          | Right Ctrl         |
-| Throw Grenade | Right Shift        |
-| Switch Weapon | Enter              |
-| Sprint        | Down Arrow         |
+**Option B — Join an existing game**
 
-### Player 3
+```bash
+python wargame.py join 192.168.1.20 Player2
+```
 
-| Action        | Key   |
-| ------------- | ----- |
-| Move          | J / L |
-| Jump          | I     |
-| Aim Up / Down | U / O |
-| Fire          | H     |
-| Throw Grenade | K     |
-| Switch Weapon | N     |
-| Sprint        | Space |
+Replace `192.168.1.20` with the host computer's local IP address.
 
-### General Controls
+**Option C — Start a dedicated server**
 
-* **Enter** — Start the game or play again.
-* **P** — Pause or resume the game.
-* **Esc** — Exit the game.
+```bash
+python wargame.py server
+```
 
-### Weapon Tips
+A dedicated server runs without the normal game window.
 
-* **Pistol:** A reliable weapon with unlimited reserve ammunition.
-* **AK-47:** An automatic weapon with a high rate of fire.
-* **Shotgun:** Fires multiple pellets and has powerful recoil.
-* **Sniper Rifle:** Hold the fire key to aim through the scope, then release to shoot.
-* **Grenades:** Hold the grenade key to charge your throw, then release to launch it.
+You can also run the script without arguments and follow its prompts:
 
-## 🏆 How to Play
+```bash
+python wargame.py
+```
 
-1. Start the game by pressing Enter.
-2. Choose your movement and aiming strategy.
-3. Fight the other two players using your available weapons.
-4. Collect supply crates to replenish health, ammunition, and grenades.
-5. Use explosions to reshape the terrain and gain a tactical advantage.
-6. Reach **10 kills** before your opponents to win!
+## Multiplayer Setup
 
-## 📁 Project Structure
+1. Connect all computers to the same Wi-Fi network or wired LAN.
+2. Install Python and Ursina on each computer that needs to run the game client.
+3. Start the host using the `host` command.
+4. Find the host computer's local IP address.
+5. Start the other clients using the `join` command and the host's IP address.
+6. Allow Python through the firewall for **private networks** if prompted.
+7. The default game port is **TCP 5555**. Make sure the host's firewall allows the connection.
+8. Select a character and press **Ready**.
+9. The host can start the round when everyone is ready. If all three players are ready, the round starts automatically.
+
+> **Note:** This setup is intended for a local network. Internet play outside the LAN may require additional network configuration.
+
+## Controls
+
+| Key                  | Action                                           |
+| -------------------- | ------------------------------------------------ |
+| `W` `A` `S` `D`      | Move                                             |
+| `Space`              | Jump; hold toward an edge to climb               |
+| `Left Shift`         | Sprint                                           |
+| `C` / `Left Ctrl`    | Crouch; crouch while moving to slide             |
+| Mouse                | Look around                                      |
+| `Left Mouse Button`  | Shoot                                            |
+| `Right Mouse Button` | Aim / use sniper scope                           |
+| `1`                  | Pistol                                           |
+| `2`                  | AK-47                                            |
+| `3`                  | Shotgun                                          |
+| `4`                  | Sniper Rifle                                     |
+| Mouse Wheel          | Switch weapons                                   |
+| `R`                  | Reload                                           |
+| `G`                  | Throw a grenade; hold to increase throwing power |
+| `F`                  | Use character ability                            |
+| `Esc`                | Release the mouse / resume                       |
+
+## Characters
+
+| Character          | Health | Special Ability                                              |
+| ------------------ | -----: | ------------------------------------------------------------ |
+| KANAT (Wing)       | 100 HP | Fly for up to 7 seconds; 20-second cooldown                  |
+| ŞİMŞEK (Lightning) | 100 HP | High sprint speed and a knockback charge; 20-second cooldown |
+| MAYMUN (Monkey)    | 150 HP | Throw bananas that make opponents slip and fall              |
+
+## Weapons
+
+| Weapon       |        Damage | Magazine |
+| ------------ | ------------: | -------: |
+| Pistol       |            22 |       12 |
+| AK-47        |            12 |       30 |
+| Shotgun      | 10 per pellet |        6 |
+| Sniper Rifle |            90 |        5 |
+
+Weapon damage can vary with distance, and headshots deal additional damage. Values shown are the game's configured base values.
+
+## How to Win
+
+Eliminate opponents and earn kills. The first player to reach **10 kills** wins the round. Players can respawn during a match.
+
+## Project Structure
 
 ```text
-3-player-battle-arena/
-├── savas_oyunu.py
+.
+├── wargame.py
 ├── README.md
-├── .gitignore
-└── LICENSE
+└── .gitignore
 ```
 
-## 🔮 Future Improvements
+## Troubleshooting
 
-* [ ] Main menu customization
-* [ ] Additional weapons and maps
-* [ ] Sound effects and background music
-* [ ] Configurable key bindings
-* [ ] Improved visual effects
-* [ ] Online multiplayer support
+* **`ModuleNotFoundError: No module named 'ursina'`** — Run `python -m pip install ursina`.
+* **Cannot connect to the host** — Check that all computers are on the same LAN, verify the host IP, and allow TCP port `5555` through the host's private-network firewall.
+* **The game window does not open** — Check the Python version, Ursina installation, and graphics drivers.
+* **The server is full** — The game supports a maximum of three connected players.
 
-## 🤝 Contributing
+## Contributing
 
-Suggestions, bug reports, and contributions are welcome!
+Suggestions, bug reports, and improvements are welcome. Feel free to open an issue or submit a pull request.
 
-1. Fork this repository.
-2. Create a feature branch.
-3. Commit your changes.
-4. Open a pull request.
+## License
 
-## 📄 License
-
-This project is available under the MIT License. See the `LICENSE` file for details.
-
----
-
-**Enjoy the battle!** ⚔️
+No license has been specified yet. Add a `LICENSE` file if you want to publish the project under a particular open-source license.
